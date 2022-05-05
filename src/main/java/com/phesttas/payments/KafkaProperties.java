@@ -7,8 +7,8 @@ import org.apache.kafka.clients.consumer.ConsumerConfig;
 public class KafkaProperties {
   public static Properties getProperties() {
     Properties props = new Properties();
-    props.put("bootstrap.servers", "localhost:9092");
-    // props.put("bootstrap.servers", "broker:9092");
+    // props.put("bootstrap.servers", "localhost:9092");
+    props.put("bootstrap.servers", "broker:9092");
     props.put("acks", "all");
     props.put("retries", 0);
     props.put("batch.size", 16384);
