@@ -1,7 +1,7 @@
 ARG JAR_FILE=build/libs/app-0.0.1-SNAPSHOT.jar
 ARG BUILD_HOME=/build
 
-FROM gradle:jdk11 as build-image
+FROM gradle:jdk16 as build-image
 
 ARG BUILD_HOME
 ENV APP_HOME=$BUILD_HOME
