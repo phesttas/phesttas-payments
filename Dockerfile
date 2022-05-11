@@ -1,22 +1,13 @@
-ARG JAR_FILE=build/libs/app-0.0.1-SNAPSHOT.jar
-ARG BUILD_HOME=/build
+# syntax=docker/dockerfile:1
 
-FROM gradle:jdk16 as build-image
+FROM python:3.8-slim-buster
 
-ARG BUILD_HOME
-ENV APP_HOME=$BUILD_HOME
-WORKDIR $APP_HOME
+WORKDIR /app
 
-COPY --chown=gradle:gradle build.gradle settings.gradle $APP_HOME/
-COPY --chown=gradle:gradle src $APP_HOME/src
-# COPY --chown=gradle:gradle config $APP_HOME/config
+COPY requirements.txt requirements.txt
+RUN pip3 install -r requirements.txt
 
-RUN gradle --no-daemon build
+COPY . .
 
-FROM openjdk:16-alpine
+CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
 
-ARG BUILD_HOME
-ENV APP_HOME=$BUILD_HOME
-COPY --from=build-image $APP_HOME/$JAR_FILE app.jar
-
-ENTRYPOINT java -jar app.jar
